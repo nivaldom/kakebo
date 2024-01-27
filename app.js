@@ -34,6 +34,10 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
+app.get('/', (req, res) => {
+  res.redirect('/sources');
+});
+
 // Asocia el router de source a la ruta '/sources'
 app.use('/sources', sourceRouter);
 
