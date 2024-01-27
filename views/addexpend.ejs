@@ -1,0 +1,154 @@
+<%- include('partials/header') %>
+
+
+<!-- En tu vista (expenses.ejs) -->
+<form id="expenseForm">
+
+    <div class="exFormItem">
+    <label for="description">Fecha:</label>
+    <input type="text" id="exfecha" name="exfecha" required>
+    </div>
+
+    <div class="exFormItem"></div>
+    <label for="description">Concepto:</label>
+    <input type="text" id="exconcept" name="exconcept" required>
+    </div>
+
+    <div class="exFormItem">
+    <label for="amount">Monto:</label>
+    <input type="number" id="examount" name="examount" required>
+    </div>
+
+    <div class="exFormItem">
+    <label for="excategory">Categoría:</label>
+    <select id="excategory" name="excategory"></select>
+    </div>
+
+    <div class="exFormItem">
+    <label for="exsubcategory">Subcategoría:</label>
+    <select id="exsubcategory" name="exsubcategory"></select>
+    </div>    
+
+    <div class="exFormItem">
+    <label for="exsource">Fuente:</label>
+    <select id="exsource" name="exsource"></select>
+    </div>
+  
+    <button type="button" onclick="addExpense()">Agregar Gasto</button>
+</form>
+  
+  <script>
+
+    const categorySelect = document.getElementById('excategory');
+    const categorySelectOptions = document.querySelectorAll('#excategory > option');
+    const subcategorySelect = document.getElementById('exsubcategory');
+
+    function addExpense() {
+
+      const date     = document.getElementById('exfecha').value;
+      const concept  = document.getElementById('exconcept').value;
+      const amount   = document.getElementById('examount').value;
+      const category = categorySelect.value;
+      const subcategory = subcategorySelect.value;
+      const source   = document.getElementById('exsource').value;
+
+      console.log(JSON.stringify({ date, concept, category, subcategory, amount, source }));
+
+    fetch('/expenses/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ date, concept, category, subcategory, amount, source }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data); // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito
+    })
+    .catch(error => console.error('Error:', error));
+    }
+
+  function loadCategories() {
+    fetch('/addexpend/categories')
+      .then(response => response.json())
+      .then(data => {
+        const categorySelect = document.getElementById('excategory');
+        
+        // Limpiar opciones existentes
+        categorySelect.innerHTML = '';
+
+        // Agregar las nuevas opciones desde el servidor
+        data.forEach(category => {
+          const option = document.createElement('option');
+          option.value = category.id_category;
+          option.textContent = category.name;
+          categorySelect.appendChild(option);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+  };
+
+  function loadSubcategories() {
+    
+    const selectedCategoryId = categorySelect.value;
+
+    // Verificar si se seleccionó una categoría antes de hacer la solicitud
+    if (selectedCategoryId) {
+      fetch(`/addexpend/subcategories?id_category=${selectedCategoryId}`)
+        .then(response => response.json())
+        .then(data => {
+          
+          
+          // Limpiar opciones existentes
+          subcategorySelect.innerHTML = '';
+
+          // Agregar las nuevas opciones desde el servidor
+          data.forEach(subcategory => {
+            const option = document.createElement('option');
+            option.value = subcategory.id_subcategory;
+            option.textContent = subcategory.name;
+            subcategorySelect.appendChild(option);
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  };
+
+  function loadSources() {
+    fetch('/addexpend/sources')
+      .then(response => response.json())
+      .then(data => {
+        const sourceSelect = document.getElementById('exsource');
+        
+        // Limpiar opciones existentes
+        sourceSelect.innerHTML = '';
+
+        // Agregar las nuevas opciones desde el servidor
+        data.forEach(source => {
+          const option = document.createElement('option');
+          option.value = source.id_source;
+          option.textContent = source.name;
+          sourceSelect.appendChild(option);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+categorySelect.addEventListener('change', function() {
+    const selectedValue = categorySelect.value;
+    loadSubcategories();
+    console.log('Opción seleccionada:', selectedValue);
+});
+
+  loadCategories();
+  loadSources();
+
+  </script>
+  
+
+<%- include('partials/footer') %>

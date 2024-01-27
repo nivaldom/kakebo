@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="source-header">
+    <h1>Fuentes</h1>
+  </div>
+  <div class="sources-resume-container">
+  <div class="sources-resume">
+    <div class="source-resume-header">
+      <div class="source-total-label">Tienes en total:</div>
+      <div class="source-total-amount">S/ <%= totalAmount %></div>
+    </div>
+    <% sources.forEach(source => { %>
+      <div class="source-resume-rows">
+        
+        <div class="source-resume-rows-label"><i class="fa-solid fa-money-bill"></i>  <%= `${source.name} ${source.bank}` %></div>
+        <div class="source-resume-rows-amount">S/ <%= source.amount.toFixed(2) %></div>
+      </div>
+    <% }) %>
+    </div>
+</div>
+
+<div class="sources-dailybudget">
+  <h2><%=`Tu presupuesto diario es: S/ ${dailyAmount.toFixed(2)}`%></h2>
+</div>
+
+
+</div>
+
+  <%- include('partials/footer') %>

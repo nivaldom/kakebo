@@ -1,0 +1,19 @@
+{
+  "name": "kakebo-ndjs",
+  "version": "1.0.0",
+  "description": "Aplicación para ordenar gastos y presupuestos personales",
+  "main": "app.js",
+  "scripts": {
+    "start": "node -r dotenv/config app.js"
+  },
+  "author": "Nivaldo Munoz",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "mysql": "^2.18.1"
+  }
+}

@@ -1,0 +1,44 @@
+<%- include('partials/header') %>
+
+
+<div class="container">
+    <div class="expenses-header">
+        <h1>Gastos</h1>
+        <div class="expenses-dates">
+            <a id="exp-dia-filter"><div class="expenses-dia">Día</div></a>
+            <a id="exp-semana-filter"><div class="expenses-semana" style="background-color: rgb(255, 255, 255);">Semana</div></a>
+            <a id="exp-mes-filter"><div class="expenses-mes">Mes</div></a>
+            <a id="exp-ano-filter"><div class="expenses-ano">Año</div></a>
+        </div>
+    </div>
+
+    <div class="expenses-resume">
+        <h1>Resumen gasto</h1>
+        <h2 class="expenses-resume-label">S/ <span>0.00</span></h2>
+    </div>
+
+    <div class="expenses-list">
+        <h1>Lista de Gastos</h1>
+        <div class="expenses-list-item-group">
+            <% expenses.forEach(expense => { %>
+                <div class="expenses-list-item">
+                    <div class="expenses-list-item-img">
+                        <img src="/images/<%= expense.icon %>.png" width="24px">
+                    </div>
+                    <div class="expenses-list-item-label">
+                        <p class="expenses-list-item-label-concept"><%= expense.concept %></p>
+                        <p class="expenses-list-item-label-category"><%= expense.name %></p>
+                    </div>
+                    <div class="expenses-list-item-detail">
+                        <p class="expenses-list-item-detail-price">- S/ <%= expense.amount.toFixed(2) %></p>
+                        <p class="expenses-list-item-detail-date"><%= `${expense.fec.split('-')[2]}/${expense.fec.split('-')[1]}` %></p>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    
+</div>
+
+<%- include('partials/footer') %>
+
