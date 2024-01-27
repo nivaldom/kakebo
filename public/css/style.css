@@ -4,7 +4,6 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #CDBFE1;
-
 }
 
 .container {
@@ -52,20 +51,22 @@ body {
     font-size: 12px;
 }
 
-.general-menu-bar{
+.general-menu-bar {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
-    left: 1px;
     background-color: #FFFFFF;
-    padding: 5px 5px;
+    padding: 10px; /* Ajuste del espaciado */
     display: flex;
     justify-content: space-around;
+    align-items: center; /* Centrar verticalmente los elementos */
+    border-top: 1px solid #CCCCCC; /* Borde superior para mayor visibilidad */
 }
 
-.general-menu-bat-btn1-icon{
+.general-menu-bat-btn1-icon img{
     text-align: center;
-    font-size: 56px;
+    width: 56px;
 }
 
 .general-menu-bar-btn1{
@@ -151,11 +152,3 @@ body {
     display: block;
     margin: auto;
 }
-
-/* Formulario de inserción de gasto */
-
-/*
-#expenseForm{
-
-}
-*/
